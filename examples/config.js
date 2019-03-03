@@ -1,4 +1,4 @@
-export const config = {
+export default {
   url: 'http://localhost:9200',
   size: 5,
   match: 2,

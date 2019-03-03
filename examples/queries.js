@@ -1,4 +1,4 @@
-export const queries = {
+export default {
   match: {
     bike_type: 'road',
     size: 54,
