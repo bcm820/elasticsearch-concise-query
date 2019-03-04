@@ -1,46 +1,67 @@
-declare type ConciseQueries = {
-  match?: object;
-  range?: object;
-  enums?: object;
-  multiField?: object;
-};
+interface ConciseMatchQuery {
+  [key: string]: string | number | boolean;
+}
 
-declare type ConciseConfig = {
-  url: string;
-  size?: number;
-  match?: number;
-  sortBy?: string;
-  log?: string;
-  test: boolean;
-};
-
-declare type MatchQuery = {
-  match: object;
-};
-
-declare type RangeQuery = {
-  query: {
-    range: object;
+interface ConciseRangeQuery {
+  [key: string]: {
+    lte?: number | string;
+    gte?: number | string;
+    format?: string;
   };
-};
+}
 
-declare type QueryStringQuery = {
+interface ConciseEnumsQuery {
+  [key: string]: string | string[];
+}
+
+declare type ConciseMultiFieldQueryArray = {
+  fields: string[];
+  value: string | number | boolean;
+}[];
+
+interface Queries {
+  match?: ConciseMatchQuery;
+  enums?: ConciseEnumsQuery;
+  range?: ConciseRangeQuery;
+  multiField?: ConciseMultiFieldQueryArray;
+}
+
+interface ConciseQueries extends Queries {
+  filter?: Queries;
+  exclude?: Queries;
+}
+
+interface MatchQuery {
+  match: ConciseMatchQuery;
+}
+
+interface RangeQuery {
+  query: {
+    range: {
+      lte?: number | string;
+      gte?: number | string;
+      format?: string;
+    };
+  };
+}
+
+interface QueryStringQuery {
   query_string: {
-    query: string | string[];
+    query: string;
     default_field: string;
     analyze_wildcard?: boolean;
-    fuzziness: number;
+    fuzziness?: string | number;
   };
-};
+}
 
-declare type MultiMatchQuery = {
+interface MultiMatchQuery {
   multi_match: {
     query: string | number | boolean;
     fields: string[];
     type: string;
     operator: string;
   };
-};
+}
 
 declare type Query =
   | MatchQuery
@@ -48,15 +69,24 @@ declare type Query =
   | QueryStringQuery
   | MultiMatchQuery;
 
-declare type BoolQuery = {
+interface ConciseConfig {
+  url: string;
+  size?: number;
+  match?: number;
+  test?: boolean;
+  sortBy?: { field: string; order: string };
+}
+
+interface BoolQuery {
+  minimum_should_match?: number;
   should?: Query[];
   must?: Query[];
   must_not?: Query[];
   filter?: Query[];
-};
+}
 
-declare type QueryRequestBody = {
+interface QueryRequestBody {
   query: { bool: BoolQuery };
   size?: number;
   sort?: object;
-};
+}
