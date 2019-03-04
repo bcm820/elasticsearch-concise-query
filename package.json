@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "lint": "tslint --fix"
+    "lint": "tslint --fix",
+    "start": "npm run build -- -w"
   },
   "peerDependencies": {
     "react": "^16.0.0",
