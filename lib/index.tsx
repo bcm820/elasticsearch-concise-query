@@ -1,5 +1,27 @@
 import React from 'react';
+import queries from '../examples/queries';
+import config from '../examples/config';
+import output from '../examples/output';
+import build from './build';
 
-const Test = () => <div>It worked!</div>;
+type DisplayProps = { title: string; data: object };
+const Display: React.SFC<DisplayProps> = ({ title, data }) => (
+  <div>
+    <h3>{title}</h3>
+    <pre>{JSON.stringify(data, null, 2)}</pre>
+  </div>
+);
 
-export = Test;
+const App: React.SFC<{}> = () => (
+  <div
+    style={{ display: 'flex', width: '100vw', justifyContent: 'space-evenly' }}>
+    <div>
+      <Display title={'Queries'} data={queries} />
+      <Display title={'Config'} data={config} />
+    </div>
+    <Display title={'Expected'} data={output} />
+    <Display title={'Output'} data={build(queries, config)} />
+  </div>
+);
+
+export = App;

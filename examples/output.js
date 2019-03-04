@@ -18,16 +18,12 @@ export default {
           }
         },
         {
-          match: {
-            post_date: '2016-07-01'
-          }
-        },
-        {
           query: {
             range: {
               ship_date: {
-                lt: '2018-03-20',
-                format: 'yyyy-MM-dd'
+                lte: '2017-01-01',
+                gte: '2016',
+                format: 'dd/MM/yyyy||yyyy'
               }
             }
           }
