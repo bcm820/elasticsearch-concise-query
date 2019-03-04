@@ -1,13 +1,13 @@
-export const parseMatch = (obj: ConciseMatchQuery): MatchQuery[] =>
+export const parseMatch = (obj: IConciseMatchQuery): IMatchQuery[] =>
   Object.keys(obj).map(
-    (k): MatchQuery => ({
+    (k): IMatchQuery => ({
       match: { [k]: obj[k] }
     })
   );
 
-export const parseRange = (obj: ConciseRangeQuery): RangeQuery[] =>
+export const parseRange = (obj: IConciseRangeQuery): IRangeQuery[] =>
   Object.keys(obj).map(
-    (k): RangeQuery => ({
+    (k): IRangeQuery => ({
       query: {
         range: {
           [k]: { ...(obj[k] as object) }
@@ -16,12 +16,12 @@ export const parseRange = (obj: ConciseRangeQuery): RangeQuery[] =>
     })
   );
 
-export const parseEnums = (obj: ConciseEnumsQuery): QueryStringQuery[] =>
+export const parseEnums = (obj: IConciseEnumsQuery): IQueryStringQuery[] =>
   Object.keys(obj).map(
-    (k): QueryStringQuery => {
-      const query = (<string[]>obj[k]).join
-        ? (<string[]>obj[k]).join(' OR ')
-        : <string>obj[k];
+    (k): IQueryStringQuery => {
+      const query = (obj[k] as string[]).join
+        ? (obj[k] as string[]).join(' OR ')
+        : (obj[k] as string);
       return {
         query_string: {
           query,
@@ -34,8 +34,8 @@ export const parseEnums = (obj: ConciseEnumsQuery): QueryStringQuery[] =>
   );
 
 export const parseMultiField = (
-  arr: ConciseMultiFieldQueryArray
-): MultiMatchQuery[] =>
+  arr: IConciseMultiFieldQueryArray
+): IMultiMatchQuery[] =>
   arr.map(({ fields, value }) => ({
     multi_match: {
       query: value,

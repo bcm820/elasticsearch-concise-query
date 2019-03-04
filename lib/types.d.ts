@@ -1,92 +1,92 @@
-interface ConciseMatchQuery {
+interface IConciseMatchQuery {
   [key: string]: string | number | boolean;
 }
 
-interface ConciseRangeQuery {
+interface IConciseRangeQuery {
   [key: string]: {
-    lte?: number | string;
-    gte?: number | string;
-    format?: string;
+    readonly lte?: number | string;
+    readonly gte?: number | string;
+    readonly format?: string;
   };
 }
 
-interface ConciseEnumsQuery {
+interface IConciseEnumsQuery {
   [key: string]: string | string[];
 }
 
-declare type ConciseMultiFieldQueryArray = {
-  fields: string[];
-  value: string | number | boolean;
+declare type IConciseMultiFieldQueryArray = {
+  readonly fields: string[];
+  readonly value: string | number | boolean;
 }[];
 
-interface Queries {
-  match?: ConciseMatchQuery;
-  enums?: ConciseEnumsQuery;
-  range?: ConciseRangeQuery;
-  multiField?: ConciseMultiFieldQueryArray;
+interface IQueries {
+  readonly match?: IConciseMatchQuery;
+  readonly enums?: IConciseEnumsQuery;
+  readonly range?: IConciseRangeQuery;
+  readonly multiField?: IConciseMultiFieldQueryArray;
 }
 
-interface ConciseQueries extends Queries {
-  filter?: Queries;
-  exclude?: Queries;
+interface IConciseQueries extends IQueries {
+  readonly filter?: IQueries;
+  readonly exclude?: IQueries;
 }
 
-interface MatchQuery {
-  match: ConciseMatchQuery;
+interface IMatchQuery {
+  readonly match: IConciseMatchQuery;
 }
 
-interface RangeQuery {
+interface IRangeQuery {
   query: {
     range: {
-      lte?: number | string;
-      gte?: number | string;
-      format?: string;
+      readonly lte?: number | string;
+      readonly gte?: number | string;
+      readonly format?: string;
     };
   };
 }
 
-interface QueryStringQuery {
+interface IQueryStringQuery {
   query_string: {
-    query: string;
-    default_field: string;
-    analyze_wildcard?: boolean;
-    fuzziness?: string | number;
+    readonly query: string;
+    readonly default_field: string;
+    readonly analyze_wildcard?: boolean;
+    readonly fuzziness?: string | number;
   };
 }
 
-interface MultiMatchQuery {
+interface IMultiMatchQuery {
   multi_match: {
-    query: string | number | boolean;
-    fields: string[];
-    type: string;
-    operator: string;
+    readonly query: string | number | boolean;
+    readonly fields: string[];
+    readonly type: string;
+    readonly operator: string;
   };
 }
 
-declare type Query =
-  | MatchQuery
-  | RangeQuery
-  | QueryStringQuery
-  | MultiMatchQuery;
+declare type IQuery =
+  | IMatchQuery
+  | IRangeQuery
+  | IQueryStringQuery
+  | IMultiMatchQuery;
 
-interface ConciseConfig {
-  url: string;
-  size?: number;
-  match?: number;
-  test?: boolean;
-  sortBy?: { field: string; order: string };
+interface IConciseConfig {
+  readonly url: string;
+  readonly size?: number;
+  readonly match?: number;
+  readonly test?: boolean;
+  readonly sortBy?: { field: string; order: string };
 }
 
-interface BoolQuery {
+interface IBoolQuery {
+  readonly must?: IQuery[];
+  readonly should?: IQuery[];
   minimum_should_match?: number;
-  should?: Query[];
-  must?: Query[];
-  must_not?: Query[];
-  filter?: Query[];
+  must_not?: IQuery[];
+  filter?: IQuery[];
 }
 
-interface QueryRequestBody {
-  query: { bool: BoolQuery };
+interface IQueryRequestBody {
+  readonly query: { bool: IBoolQuery };
   size?: number;
   sort?: object;
 }

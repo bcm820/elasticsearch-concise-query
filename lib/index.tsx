@@ -1,14 +1,13 @@
 import React from 'react';
 import queries from '../examples/queries';
 import config from '../examples/config';
-import output from '../examples/output';
 import build from './build';
 
 type DisplayProps = { title: string; data: object };
 const Display: React.SFC<DisplayProps> = ({ title, data }) => (
   <div>
     <h3>{title}</h3>
-    <pre>{JSON.stringify(data, null, 2)}</pre>
+    <pre style={{ fontSize: 20 }}>{JSON.stringify(data, null, 2)}</pre>
   </div>
 );
 
@@ -19,7 +18,6 @@ const App: React.SFC<{}> = () => (
       <Display title={'Queries'} data={queries} />
       <Display title={'Config'} data={config} />
     </div>
-    <Display title={'Expected'} data={output} />
     <Display title={'Output'} data={build(queries, config)} />
   </div>
 );

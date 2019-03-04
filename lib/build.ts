@@ -5,7 +5,7 @@ const buildQueries = ({
   range = {},
   enums = {},
   multiField = []
-}: ConciseQueries): Query[] => [
+}: IConciseQueries): IQuery[] => [
   ...parseMatch(match),
   ...parseRange(range),
   ...parseEnums(enums),
@@ -13,10 +13,10 @@ const buildQueries = ({
 ];
 
 const build = (
-  conciseQueries: ConciseQueries,
-  config: ConciseConfig
-): QueryRequestBody => {
-  const boolQuery: BoolQuery = {
+  conciseQueries: IConciseQueries,
+  config: IConciseConfig
+): IQueryRequestBody => {
+  const boolQuery: IBoolQuery = {
     [config.match ? 'should' : 'must']: [...buildQueries(conciseQueries)]
   };
 
@@ -26,7 +26,7 @@ const build = (
     boolQuery.must_not = buildQueries(conciseQueries.exclude);
   if (config.match) boolQuery.minimum_should_match = config.match;
 
-  const requestBody: QueryRequestBody = {
+  const requestBody: IQueryRequestBody = {
     query: { bool: boolQuery }
   };
 
