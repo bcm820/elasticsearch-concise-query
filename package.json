@@ -10,26 +10,29 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc",
-    "lint": "tslint --fix",
-    "start": "npm run build -- -w"
+    "build": "npm run lint && rm -rf dist && tsc",
+    "lint": "tslint -c tslint.json 'lib/**/*.ts' --fix",
+    "prepare": "npm run build",
+    "start": "tsc -- -w",
+    "test": "jest --watch"
   },
   "peerDependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.121",
+    "@types/jest": "^24.0.9",
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.8.2",
-    "lodash": "^4.17.11",
-    "path": "^0.12.7",
+    "jest": "^24.1.0",
+    "jest-dom": "^3.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "tslint": "*",
-    "tslint-react": "*",
+    "react-testing-library": "^6.0.0",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.13.1",
+    "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333"
-  },
-  "dependencies": {}
+  }
 }

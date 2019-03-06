@@ -1,2 +1,7 @@
+examples/
+lib/
 .babelrc
-webpack.config.js
+jest.config.js
+rtl.config.ts
+tsconfig.json
+tslint.json
