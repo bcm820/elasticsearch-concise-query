@@ -1,3 +1,7 @@
+/**
+ * @param obj - an object containing concise match queries.
+ * @returns an array of parsed Elasticsearch match queries.
+ */
 export const parseMatch = (obj: IConciseMatchQuery): IMatchQuery[] =>
   Object.keys(obj).map(
     (k): IMatchQuery => ({
@@ -5,6 +9,10 @@ export const parseMatch = (obj: IConciseMatchQuery): IMatchQuery[] =>
     })
   );
 
+/**
+ * @param obj - an object containing concise range queries.
+ * @returns an array of parsed Elasticsearch range queries.
+ */
 export const parseRange = (obj: IConciseRangeQuery): IRangeQuery[] =>
   Object.keys(obj).map(
     (k): IRangeQuery => ({
@@ -16,6 +24,10 @@ export const parseRange = (obj: IConciseRangeQuery): IRangeQuery[] =>
     })
   );
 
+/**
+ * @param obj - an object containing concise enums queries.
+ * @returns an array of parsed Elasticsearch query string queries.
+ */
 export const parseEnums = (obj: IConciseEnumsQuery): IQueryStringQuery[] =>
   Object.keys(obj).map(
     (k): IQueryStringQuery => {
@@ -33,6 +45,10 @@ export const parseEnums = (obj: IConciseEnumsQuery): IQueryStringQuery[] =>
     }
   );
 
+/**
+ * @param obj - an array containing concise multiField queries.
+ * @returns an array of parsed Elasticsearch multi match queries.
+ */
 export const parseMultiField = (
   arr: IConciseMultiFieldQueryArray
 ): IMultiMatchQuery[] =>

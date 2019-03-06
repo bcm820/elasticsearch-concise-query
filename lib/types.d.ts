@@ -74,12 +74,12 @@ interface IConciseConfig {
   readonly size?: number;
   readonly match?: number;
   readonly test?: boolean;
-  readonly sortBy?: { field: string; order: string };
+  readonly sortBy?: { field: string; order?: string };
 }
 
 interface IBoolQuery {
-  readonly must?: IQuery[];
-  readonly should?: IQuery[];
+  must?: IQuery[];
+  should?: IQuery[];
   minimum_should_match?: number;
   must_not?: IQuery[];
   filter?: IQuery[];

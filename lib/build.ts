@@ -1,5 +1,9 @@
 import { parseMatch, parseRange, parseEnums, parseMultiField } from './parsers';
 
+/**
+ * @param conciseQueries - an object containing a variety of concise queries.
+ * @returns an array of parsed queries to combine into an Elasticsearch Bool Query.
+ */
 const buildQueries = ({
   match = {},
   range = {},
@@ -12,19 +16,29 @@ const buildQueries = ({
   ...parseMultiField(multiField)
 ];
 
+/**
+ * @param conciseQueries - an object containing a variety of concise queries.
+ * @param config - a configuration object used for shaping the Elasticsearch query.
+ * @returns an Elasticsearch query object to convert to JSON as a request body.
+ */
 const build = (
   conciseQueries: IConciseQueries,
   config: IConciseConfig
 ): IQueryRequestBody => {
-  const boolQuery: IBoolQuery = {
-    [config.match ? 'should' : 'must']: [...buildQueries(conciseQueries)]
-  };
+  const boolQuery: IBoolQuery = {};
+
+  const queriesArray = [...buildQueries(conciseQueries)];
+  if (queriesArray.length) {
+    if (config.match) {
+      boolQuery.should = queriesArray;
+      boolQuery.minimum_should_match = config.match;
+    } else boolQuery.must = queriesArray;
+  }
 
   if (conciseQueries.filter)
     boolQuery.filter = buildQueries(conciseQueries.filter);
   if (conciseQueries.exclude)
     boolQuery.must_not = buildQueries(conciseQueries.exclude);
-  if (config.match) boolQuery.minimum_should_match = config.match;
 
   const requestBody: IQueryRequestBody = {
     query: { bool: boolQuery }
