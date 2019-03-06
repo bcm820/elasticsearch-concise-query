@@ -39,8 +39,6 @@ export const parseMultiField = (
   arr.map(({ fields, value }) => ({
     multi_match: {
       query: value,
-      fields,
-      type: 'best_fields',
-      operator: 'or'
+      fields
     }
   }));

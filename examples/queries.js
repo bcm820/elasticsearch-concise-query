@@ -2,10 +2,10 @@ export default {
   match: {
     bike_type: 'road',
     size: 54,
-    release_date: '2016-06-03' // use string date format
+    release_date: '2016-06-03'
   },
   range: {
-    ship_date: { lte: '2017-01-01', gte: '2016', format: 'dd/MM/yyyy||yyyy' }
+    ship_date: { lte: '2017-01-01', gte: '2016', format: 'dd-MM-yyyy||yyyy' }
   },
   enums: {
     frame: ['carbon', 'aluminum alloy'], // as an array

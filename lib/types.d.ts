@@ -38,9 +38,11 @@ interface IMatchQuery {
 interface IRangeQuery {
   query: {
     range: {
-      readonly lte?: number | string;
-      readonly gte?: number | string;
-      readonly format?: string;
+      [key: string]: {
+        readonly lte?: number | string;
+        readonly gte?: number | string;
+        readonly format?: string;
+      };
     };
   };
 }
@@ -49,8 +51,8 @@ interface IQueryStringQuery {
   query_string: {
     readonly query: string;
     readonly default_field: string;
-    readonly analyze_wildcard?: boolean;
-    readonly fuzziness?: string | number;
+    readonly analyze_wildcard: boolean;
+    readonly fuzziness: string | number;
   };
 }
 
@@ -58,8 +60,6 @@ interface IMultiMatchQuery {
   multi_match: {
     readonly query: string | number | boolean;
     readonly fields: string[];
-    readonly type: string;
-    readonly operator: string;
   };
 }
 
