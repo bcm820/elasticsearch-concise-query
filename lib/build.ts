@@ -28,12 +28,11 @@ const build = (
   const boolQuery: IBoolQuery = {};
 
   const queriesArray = [...buildQueries(conciseQueries)];
-  if (queriesArray.length) {
+  if (queriesArray.length)
     if (config.match) {
       boolQuery.should = queriesArray;
       boolQuery.minimum_should_match = config.match;
     } else boolQuery.must = queriesArray;
-  }
 
   if (conciseQueries.filter)
     boolQuery.filter = buildQueries(conciseQueries.filter);

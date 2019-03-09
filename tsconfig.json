@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./lib/",
+    "baseUrl": "lib",
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,5 +18,12 @@
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "dist", "examples", "**/*.test.tsx"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples",
+    "rtl.config.ts",
+    "**/__tests__/**/*.test.ts",
+    "**/__tests__/**/*.test.tsx"
+  ]
 }

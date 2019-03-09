@@ -13,7 +13,7 @@
     "build": "npm run lint && rm -rf dist && tsc",
     "lint": "tslint -c tslint.json 'lib/**/*.ts' --fix",
     "prepare": "npm run build",
-    "start": "tsc -- -w",
+    "start": "tsc --watch",
     "test": "jest --watch"
   },
   "peerDependencies": {

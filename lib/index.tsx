@@ -1,25 +1,33 @@
 import React from 'react';
-import queries from '../examples/queries';
-import config from '../examples/config';
 import build from './build';
 
-type DisplayProps = { title: string; data: object };
-const Display: React.SFC<DisplayProps> = ({ title, data }) => (
-  <div>
-    <h3>{title}</h3>
-    <pre style={{ fontSize: 20 }}>{JSON.stringify(data, null, 2)}</pre>
-  </div>
-);
+export const ECQ = (queries: IConciseQueries, config: IConciseConfig) => <
+  Props extends object
+>(
+  Component: React.ComponentType<Props>
+) =>
+  class extends React.Component {
+    state = { results: [] };
 
-const App: React.SFC<{}> = () => (
-  <div
-    style={{ display: 'flex', width: '100vw', justifyContent: 'space-evenly' }}>
-    <div>
-      <Display title={'Queries'} data={queries} />
-      <Display title={'Config'} data={config} />
-    </div>
-    <Display title={'Output'} data={build(queries, config)} />
-  </div>
-);
+    componentDidMount() {
+      if (!config.test) {
+        console.log(`Sending request to ${config.url}!`);
+        this.sendQuery();
+      }
+    }
 
-export = App;
+    sendQuery = () =>
+      fetch(config.url, {
+        method: 'POST',
+        body: JSON.stringify(build(queries, config))
+      })
+        .then(res => res.json())
+        .then(res => this.setState({ results: res.hits.hits }))
+        .catch(err => console.error(`ECQ: Request failed. ${err}`));
+
+    render() {
+      return <Component {...this.props as Props} data={this.state.results} />;
+    }
+  };
+
+export const buildECQ = build;
