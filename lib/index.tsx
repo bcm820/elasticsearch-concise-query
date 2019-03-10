@@ -7,7 +7,10 @@ export const ECQ = (queries: IConciseQueries, config: IConciseConfig) => <
   Component: React.ComponentType<Props>
 ) =>
   class extends React.Component {
-    state = { results: [] };
+    state = {
+      results: [],
+      query: build(queries, config)
+    };
 
     componentDidMount() {
       if (!config.test) {
@@ -26,7 +29,7 @@ export const ECQ = (queries: IConciseQueries, config: IConciseConfig) => <
       fetch(`${index}_search`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(build(queries, config))
+        body: JSON.stringify(this.state.query)
       })
         .then(res => res.json())
         .then(res => this.setState({ results: res.hits.hits }))
@@ -34,7 +37,11 @@ export const ECQ = (queries: IConciseQueries, config: IConciseConfig) => <
 
     render() {
       return (
-        <Component {...this.props as Props} results={this.state.results} />
+        <Component
+          {...this.props as Props}
+          query={this.state.query}
+          results={this.state.results}
+        />
       );
     }
   };
