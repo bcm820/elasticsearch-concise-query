@@ -1,6 +1,6 @@
 {
   "name": "elasticsearch-concise-query",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A highly configurable and syntactically concise Elasticsearch query builder",
   "keywords": [
     "Elasticsearch"
