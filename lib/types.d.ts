@@ -70,9 +70,9 @@ declare type IQuery =
   | IMultiMatchQuery;
 
 interface IConciseConfig {
-  readonly url: string;
+  readonly index: string;
   readonly size?: number;
-  readonly match?: number;
+  readonly required?: number;
   readonly test?: boolean;
   readonly sortBy?: { field: string; order?: string };
 }

@@ -29,9 +29,9 @@ const build = (
 
   const queriesArray = [...buildQueries(conciseQueries)];
   if (queriesArray.length)
-    if (config.match) {
+    if (config.required) {
       boolQuery.should = queriesArray;
-      boolQuery.minimum_should_match = config.match;
+      boolQuery.minimum_should_match = config.required;
     } else boolQuery.must = queriesArray;
 
   if (conciseQueries.filter)
