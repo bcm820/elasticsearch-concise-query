@@ -29,7 +29,7 @@ export default ECQ(conciseQueries, config)(MyComponent)
 
 [bool]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
 
-[See the `examples` directory for more detailed example usage.]('./examples')
+[See the `examples` directory for more detailed example usage.](examples)
 
 Using esConnect to access indexed Elasticsearch data for use in an application is as easy as passing a simple, single-depth object with search parameters and an optional configuration object into a function:
 
@@ -39,7 +39,13 @@ buildECQ({
   range: { price: { lte: 600, gte: 1000 } },
   enums: { frame: ['carbon', 'aluminum alloy'] },
   multiField: [{ fields: ['description, keywords'], value: 'skinny tires' }]
-}, configObj);
+}, {
+  index: 'http://path.to/index',
+  size: 10,
+  required: 4,
+  sortBy: { field: 'price', order: 'asc' },
+  test: false
+});
 ```
 
 `buildECQ` returns an Elasticsearch [bool query object][bool]:
