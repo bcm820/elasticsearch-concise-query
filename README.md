@@ -33,24 +33,27 @@ export default ECQ(conciseQueries, config)(MyComponent)
 
 Using esConnect to access indexed Elasticsearch data for use in an application is as easy as passing a simple, single-depth object with search parameters and an optional configuration object into a function:
 
-```
-buildECQ({
-  match: { bike_type: 'road' },
-  range: { price: { lte: 600, gte: 1000 } },
-  enums: { frame: ['carbon', 'aluminum alloy'] },
-  multiField: [{ fields: ['description, keywords'], value: 'skinny tires' }]
-}, {
-  index: 'http://path.to/index',
-  size: 10,
-  required: 4,
-  sortBy: { field: 'price', order: 'asc' },
-  test: false
-});
+```javascript
+buildECQ(
+  {
+    match: { bike_type: 'road' },
+    range: { price: { lte: 600, gte: 1000 } },
+    enums: { frame: ['carbon', 'aluminum alloy'] },
+    multiField: [{ fields: ['description, keywords'], value: 'skinny tires' }]
+  },
+  {
+    index: 'http://path.to/index',
+    size: 10,
+    required: 4,
+    sortBy: { field: 'price', order: 'asc' },
+    test: false
+  }
+);
 ```
 
 `buildECQ` returns an Elasticsearch [bool query object][bool]:
 
-```
+```json
 {
   "query": {
     "bool": {
@@ -81,9 +84,7 @@ buildECQ({
         {
           "multi_match": {
             "query": "skinny tires",
-            "fields": [
-              "description, keywords"
-            ]
+            "fields": ["description, keywords"]
           }
         }
       ],
@@ -121,10 +122,10 @@ A configuration object is passed as a second argument to `buildECQ`:
 
 To use with ElasticSearch's official Javascript client, [elasticsearch.js](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html#api-search), simply call `buildESQuery` as follows in the object given to its `search` method:
 
-```
+```javascript
 client.search({
   index: 'myindex',
-  body: buildESQuery(query, config)
+  body: buildECQ(query, config)
 });
 ```
 
@@ -132,9 +133,9 @@ client.search({
 
 To use with [ReactiveSearch](https://opensource.appbase.io/reactive-manual/advanced/customquery.html), a React component library, simply pass a function that calls `buildESQuery` as follows into the `customQuery` prop. For example:
 
-```
+```javascript
 <DataSearch
   ...
-  customQuery={() => buildESQuery(query, config)}
+  customQuery={() => buildECQ(query, config)}
 />
 ```
