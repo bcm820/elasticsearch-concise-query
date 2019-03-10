@@ -10,12 +10,12 @@ export default {
   enums: {
     frame: ['carbon', 'aluminum alloy'], // as an array
     colors: '(black OR gray) AND red', // using querystring syntax,
-    brand: ['Gianz~', 'Cannon*', 'Spec^2'] // use wildcard symbols
+    brand: ['Gianz~', 'Cannon*', 'Spec^2'] // using fuzzy, wildcard, and boost symbols
   },
   multiField: [
     { fields: ['description, keywords'], value: 'skinny tires' },
     { fields: ['wheels', 'pedals'], value: 2 }
   ],
-  filter: { match: { condition: 'brand_new' } }, // disregard scoring
+  filter: { match: { condition: 'brand_new' } },
   exclude: { range: { price: { lte: 600, gte: 1000 } } }
 };
