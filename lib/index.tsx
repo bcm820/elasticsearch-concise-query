@@ -11,14 +11,21 @@ export const ECQ = (queries: IConciseQueries, config: IConciseConfig) => <
 
     componentDidMount() {
       if (!config.test) {
-        console.log(`Sending request to ${config.url}!`);
-        this.sendQuery();
+        if (!config.index)
+          console.error('ECQ: No `index` value set in configuration object.');
+        else {
+          const index = config.index.endsWith('/')
+            ? config.index
+            : `${config.index}/`;
+          this.sendQuery(index);
+        }
       }
     }
 
-    sendQuery = () =>
-      fetch(config.url, {
+    sendQuery = (index: string) =>
+      fetch(`${index}_search`, {
         method: 'POST',
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify(build(queries, config))
       })
         .then(res => res.json())
@@ -26,7 +33,9 @@ export const ECQ = (queries: IConciseQueries, config: IConciseConfig) => <
         .catch(err => console.error(`ECQ: Request failed. ${err}`));
 
     render() {
-      return <Component {...this.props as Props} data={this.state.results} />;
+      return (
+        <Component {...this.props as Props} results={this.state.results} />
+      );
     }
   };
 

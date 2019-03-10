@@ -1,7 +1,7 @@
 export default {
-  url: 'http://localhost:9200',
+  index: 'http://localhost:9200/index',
   size: 5,
-  match: 2,
+  required: 4,
   sortBy: { field: 'price', order: 'asc' },
-  test: true
+  test: false
 };
